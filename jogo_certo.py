@@ -1,15 +1,38 @@
 import random
 import time
 import pygame
+from funcoes import *
 nome = input("Insira seu nome: ")
 email = input("Insira seu E-mail: ")
-
+historico(nome, email)
 pygame.init()
 relogio = pygame.time.Clock()
 pygame.display.set_caption("Jogo da Reciclagem")
 
 icon = pygame.image.load("assets/ico-reciclagem.ico")
 pygame.display.set_icon(icon)
+def acerto():
+    #pygame.mixer.Sound.play(explosaoSound)
+    #pygame.mixer.music.stop()
+    font = pygame.font.SysFont(None, 150)
+    texto = font.render("Certo!", True, (0, 0, 0))
+    display.blit(texto, (250, 200))
+    pygame.display.update()
+    time.sleep(0.5)
+    
+def erro():
+    #pygame.mixer.Sound.play(explosaoSound)
+    #pygame.mixer.music.stop()
+    font = pygame.font.SysFont(None, 150)
+    texto = font.render("Errado!", True, (0, 0, 0))
+    display.blit(texto, (250, 200))
+    pygame.display.update()
+    time.sleep(2)
+
+def escrevendoPlacar(contador):
+    font = pygame.font.SysFont(None, 25)
+    texto = font.render("Acertos: "+str(contador), True, (255, 255, 255))
+    display.blit(texto, (10, 10))
 
 largura = 800
 altura = 600
@@ -34,28 +57,6 @@ movimentoX = 0
 objeto = papel
 sorteio = 2
 contador = 0
-def acerto():
-    #pygame.mixer.Sound.play(explosaoSound)
-    #pygame.mixer.music.stop()
-    font = pygame.font.SysFont(None, 150)
-    texto = font.render("Certo!", True, (0, 0, 0))
-    display.blit(texto, (400, 300))
-    pygame.display.update()
-    time.sleep(0.5)
-    
-def erro():
-    #pygame.mixer.Sound.play(explosaoSound)
-    #pygame.mixer.music.stop()
-    font = pygame.font.SysFont(None, 150)
-    texto = font.render("Errouuu!", True, (0, 0, 0))
-    display.blit(texto, (100, 200))
-    pygame.display.update()
-    time.sleep(2)
-
-def escrevendoPlacar(contador):
-    font = pygame.font.SysFont(None, 25)
-    texto = font.render("Acertos: "+str(contador), True, (255, 255, 255))
-    display.blit(texto, (10, 10))
 
 while True:
     # Trabalhar com Background
@@ -79,10 +80,13 @@ while True:
                 movimentoX = velocidadeX 
         if evento.type == pygame.KEYUP:
             movimentoX = 0
-    
-        
+      
     posicaoY = posicaoY + velocidadeY
     posicaoX = posicaoX + movimentoX
+    if posicaoX < 0:
+        posicaoX = 0
+    elif posicaoX > largura - 50:
+        posicaoX = largura - 50
 #verificando colisão
     if posicaoY > 430:
         if sorteio == 1:
@@ -138,21 +142,7 @@ while True:
             objeto = garrafa
         posicaoY = -25
     
-    if contador == 5:
-        velocidadeY = 2
-    elif contador == 10:
-        velocidadeY = 3
-    elif contador == 15:
-        velocidadeY = 4
-    elif contador == 20:
-        velocidadeY = 5
-    elif contador == 25:
-        velocidadeY = 6
-    elif contador == 30:
-        velocidadeY = 7
-    elif contador == 0:
-        velocidadeY = 1
-
+    velocidadeY = niveis(contador, velocidadeY)
     
 
     pygame.display.update()
