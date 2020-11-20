@@ -22,6 +22,10 @@ verde = pygame.image.load("assets/lixeira verde.png")
 azul = pygame.image.load("assets/lixeira azul.png")
 banana = pygame.image.load("assets/banana.png")
 papel = pygame.image.load("assets/papel.png")
+lata = pygame.image.load("assets/lata.png")
+plastico = pygame.image.load("assets/plastico.png")
+garrafa = pygame.image.load("assets/garrafa.png")
+
 posicaoX = 400
 posicaoY = -10
 velocidadeX = 5
@@ -72,7 +76,7 @@ while True:
         
     posicaoY = posicaoY + velocidadeY
     posicaoX = posicaoX + movimentoX
-#sorteando objetos
+#verificando colisão
     if posicaoY > 430:
         if sorteio == 1:
             if posicaoX > 350 and posicaoX < 450:
@@ -85,13 +89,20 @@ while True:
             else:
                 erro()
         
-#verificando colisão 
+#sorteando objetos 
+
     if posicaoY > 430:
         sorteio = random.randrange(1, 3)
         if sorteio == 1:
             objeto = banana
         elif sorteio == 2:
             objeto = papel
+        elif sorteio == 3:
+            objeto = lata
+        elif sorteio == 4:
+            objeto = plastico
+        elif sorteio == 5:
+            objeto = garrafa
         posicaoY = -10
     
    
