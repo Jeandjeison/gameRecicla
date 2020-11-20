@@ -27,12 +27,13 @@ plastico = pygame.image.load("assets/plastico.png")
 garrafa = pygame.image.load("assets/garrafa.png")
 
 posicaoX = 400
-posicaoY = -10
+posicaoY = -25
 velocidadeX = 5
 velocidadeY = 1
 movimentoX = 0
 objeto = papel
 sorteio = 2
+contador = 0
 def acerto():
     #pygame.mixer.Sound.play(explosaoSound)
     #pygame.mixer.music.stop()
@@ -41,6 +42,7 @@ def acerto():
     display.blit(texto, (400, 300))
     pygame.display.update()
     time.sleep(0.5)
+    
 def erro():
     #pygame.mixer.Sound.play(explosaoSound)
     #pygame.mixer.music.stop()
@@ -49,6 +51,11 @@ def erro():
     display.blit(texto, (100, 200))
     pygame.display.update()
     time.sleep(2)
+
+def escrevendoPlacar(contador):
+    font = pygame.font.SysFont(None, 25)
+    texto = font.render("Acertos: "+str(contador), True, (255, 255, 255))
+    display.blit(texto, (10, 10))
 
 while True:
     # Trabalhar com Background
@@ -79,20 +86,46 @@ while True:
 #verificando colisão
     if posicaoY > 430:
         if sorteio == 1:
-            if posicaoX > 350 and posicaoX < 450:
+            if posicaoX > 350 and posicaoX < 400:
                 acerto()
-            else:
-                erro()        
-        elif sorteio == 2:
-            if posicaoX > 550 and posicaoX < 650: 
-                acerto()
+                contador = contador + 1
             else:
                 erro()
-        
+                contador = 0        
+        elif sorteio == 2:
+            if posicaoX > 550 and posicaoX < 600: 
+                acerto()
+                contador = contador + 1
+            else:
+                erro()
+                contador = 0 
+        elif sorteio == 3:
+            if posicaoX > 150 and posicaoX < 200:
+                acerto()
+                contador = contador + 1
+            else:
+                erro()
+                contador = 0 
+        elif sorteio == 4:
+            if posicaoX > 250 and posicaoX < 300:
+                acerto()
+                contador = contador + 1
+            else:
+                erro()
+                contador = 0 
+        elif sorteio == 5:
+            if posicaoX > 450 and posicaoX < 500:
+                acerto()
+                contador = contador + 1
+            else:
+                erro()
+                contador = 0 
+
+    escrevendoPlacar(contador)
 #sorteando objetos 
 
     if posicaoY > 430:
-        sorteio = random.randrange(1, 3)
+        sorteio = random.randrange(1, 6)
         if sorteio == 1:
             objeto = banana
         elif sorteio == 2:
@@ -103,9 +136,23 @@ while True:
             objeto = plastico
         elif sorteio == 5:
             objeto = garrafa
-        posicaoY = -10
+        posicaoY = -25
     
-   
+    if contador == 5:
+        velocidadeY = 2
+    elif contador == 10:
+        velocidadeY = 3
+    elif contador == 15:
+        velocidadeY = 4
+    elif contador == 20:
+        velocidadeY = 5
+    elif contador == 25:
+        velocidadeY = 6
+    elif contador == 30:
+        velocidadeY = 7
+    elif contador == 0:
+        velocidadeY = 1
+
     
 
     pygame.display.update()
