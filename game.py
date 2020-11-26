@@ -8,7 +8,6 @@ historico(nome, email)
 pygame.init()
 relogio = pygame.time.Clock()
 pygame.display.set_caption("Jogo da Reciclagem")
-
 icon = pygame.image.load("assets/ico-reciclagem.ico")
 pygame.display.set_icon(icon)
 perdeuSound = pygame.mixer.Sound("assets/perdeu.wav")
@@ -16,7 +15,6 @@ yeahSound = pygame.mixer.Sound("assets/yeah.wav")
 pygame.mixer.music.load('assets/musica de fundo.wav')
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.1)
-
 largura = 800
 altura = 600
 display = pygame.display.set_mode((largura, altura))
@@ -31,8 +29,6 @@ papel = pygame.image.load("assets/papel.png")
 lata = pygame.image.load("assets/lata.png")
 plastico = pygame.image.load("assets/plastico.png")
 garrafa = pygame.image.load("assets/garrafa.png")
-
-
 posicaoX = 400
 posicaoY = -25
 velocidadeX = 5
@@ -41,9 +37,7 @@ movimentoX = 0
 objeto = papel
 sorteio = 2
 contador = 0
-
 while True:
-    # Trabalhar com Background
     display.fill((255, 255, 255))
     display.blit(background, (0, 0))
     display.blit(amarela, (150, 430))
@@ -52,7 +46,6 @@ while True:
     display.blit(verde, (450, 430))
     display.blit(azul, (550, 430))
     display.blit(objeto, (posicaoX, posicaoY )) 
-    #              devolve uma lista de eventos da tela []
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             pygame.quit()
@@ -64,14 +57,12 @@ while True:
                 movimentoX = velocidadeX 
         if evento.type == pygame.KEYUP:
             movimentoX = 0
-      
     posicaoY = posicaoY + velocidadeY
     posicaoX = posicaoX + movimentoX
     if posicaoX < 0:
         posicaoX = 0
     elif posicaoX > largura - 50:
         posicaoX = largura - 50
-#verificando colisão
     if posicaoY > 430:
         if sorteio == 1:
             if posicaoX > 350 and posicaoX < 420:
@@ -138,11 +129,8 @@ while True:
                 pygame.display.update()
                 time.sleep(2)
                 contador = 0 
-
     placar = escrevendoPlacar(contador)
     display.blit(placar, (10, 10))
-#sorteando objetos 
-
     if posicaoY > 430:
         sorteio = random.randrange(1, 6)
         if sorteio == 1:
@@ -156,9 +144,6 @@ while True:
         elif sorteio == 5:
             objeto = garrafa
         posicaoY = -25
-    
     velocidadeY = niveis(contador, velocidadeY)
-    
-
     pygame.display.update()
     relogio.tick(60)
